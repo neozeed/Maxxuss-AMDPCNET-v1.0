@@ -1,0 +1,331 @@
+-------------------------------------------------
+VMWare Implementation of AMD NIC:
+
+
+The displayed speed of 10MB/s for the VLance / AMD PCNet card is caused 
+by the fact that a physical AMD PCNet NIC can only run at 10Mb/s, so the 
+drivers only report that as an option since a physical NIC of this type 
+would not go faster. 
+
+The virtual NIC, although it appears as an AMD PCNet NIC, is not limited 
+at 10Mb/s - it will easily go faster than this if your actual NICs in 
+your Host are faster. 
+
+There's a VMWare KB article about this : 
+http://www.vmware.com/support/kb/enduser/std_adp.php?p_faqid=856
+
+---
+
+Am79c970A PCnet-PCI II Single-Chip Full-Duplex Ethernet Controller for 
+PCI Local Bus, 10Base* only.
+
+10 Mbps ???
+
+The speed reported to the guest operating system is not related to the 
+actual speed of the physical network connection. The guest operating 
+system passes data packets as fast as it can based on host CPU load and 
+the physical Ethernet bandwidth on the host, so you can ignore the LAN 
+connection speed that the guest reports.
+
+To verify this, use FTP or SMB in the guest operating system to transfer 
+a file. Check the transfer rate, which should show that the virtual 
+network adapter is not limited to the 10Mbps limit reported in the 
+guest, as your external network is faster than 10Mbps. You see this 
+10Mbps speed because the virtual network adapter is an AMD PCnet II 
+compatible NIC, which by definition is a 10Mbps NIC. 
+
+----
+
+The ethernet is indeed the AMD PCnet-PCI, but VMWare does not support 
+32-bit register access.  There is more lurking though, because after I 
+changed the register commands to 16-bit I was still unable to coax an 
+interrupt from the device.  After reading back the initialization 
+parameters to verify I was sending it correctly I was stumped.  Work 
+took over and I haven't been back to the code :-(
+
+----------------------------------------------
+From the Manual:
+
+Full-duplex operation is enabled by the FDEN and AUIFD bits located in 
+BCR9.The PCnet-PCI II controller does not support IEEE standard auto-
+negotiation between half-duplex and full-duplex operation.
+
+The PCnet-PCI II controller provides a bit in each of the LED Status 
+registers (BCR4, BCR5, BCR6, BCR7) to display the Full-Duplex Link 
+Status. If the FDLSE bit (bit 8) is set, a value of ONE will be sent to 
+the associated LEDOUT bit when the T-MAU is in the Full-Duplex Link Pass 
+state.
+
+------------------------
+
+Emulated card is Am79C970A - it is one which does NOT have MII. 
+Hopefully pcn driver is not only for MII-capable cards.
+
+Am79C970A chip is supported by lnc, not pcn
+(miibus is required to use pcn driver). 
+
+------------------------
+Magic Packet
+CSR5
+
+http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/pmset.1.html
+
+setWakeOnMagicPacket 
+Enables or disables the wake on Magic Packet support. 
+
+public
+virtual IOReturn setWakeOnMagicPacket( bool active);
+
+Discussion
+
+Called by enablePacketFilter() or disablePacketFilter() when there is a 
+change in the activation state of the wake-on-LAN filter identified by 
+kIOEthernetWakeOnMagicPacket. This method is called from the workloop 
+context. 
+
+Parameter Descriptions
+active
+
+True to enable support for system wake on reception of a Magic Packet, 
+false to disable it. 
+
+------------------------
+Understanding VMWare Logs
+
+http://www.vmware.com/community/thread.jspa?threadID=7622&tstart=0
+
+Sep 10 18:10:24: vcpu-0| VLANCE: Ethernet0 skipped 1 time(s) 
+Sep 10 18:10:24: vcpu-0| VLANCE: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Sep 10 18:10:24: vcpu-0| VLANCE: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 
+Sep 10 18:10:25: vcpu-0| VLANCE: Ethernet0 skipped 2 time(s) 
+Sep 10 18:10:25: vcpu-0| VLANCE: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Sep 10 18:10:25: vcpu-0| VLANCE: 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 
+Sep 10 18:10:25: vcpu-0| VLANCE: Ethernet0 skipped 3 time(s) 
+Sep 10 18:10:25: vcpu-0| VLANCE: 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+...
+
+Yes, these messages say that driver in the guest is not processing 
+received frames. Numbers below 'Ethernet0 skipped' describe size 
+distribution of dropped packets (64-128, 128-192, 192-... ... -1536). 
+
+I would recommend updating NIC driver in the guest. 
+
+----------------------
+Interrupt stuff / 32-bit Adressing:
+
+http://www.vmware.com/community/thread.jspa?threadID=7055&start=0&tstart=0
+http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/dev/lnc/if_lnc_pci.c.diff?r1=1.34&r2=1.35&f=h
+
+OK, I believe this is an interrupt problem.  I turned on debugging and
+the memory locations of the tx and rx rings look OK.  THe problem is
+nothing is being sent/received, the rings are full but nothing else. 
+
+I found what is the cause of problem with lnc0.
+it's commited vm_contig.c from Thu Aug 5 14:54:12 PDT 2004 ( 
+http://lists.freebsd.org/pipermail/cvs-src/2004-August/028854.html )
+
+I set in  /boot/loader.conf 
+vm.old_contigmalloc="1"
+and all stuff works fine.
+
+The significant difference you should see between vm.old_contigmalloc
+settings is allocation from the bottom of memory (=1) versus the
+top (=0).  Is lnc(4) providing incorrect information to busdma about
+what region the DMA can work in?  This sounds an awful lot like the
+call to bus_dma_tag_create(9) is bogus.
+
+--------------------
+
+http://www.opendarwin.org/pipermail/hackers/2004-February/004134.html
+
+The UDP_STREAM test was more interesting. Immediately after firing up 
+the test, the driver started kicking out errors about stalling the 
+output queue (kIOReturnOutputStall). The netperf application was firing 
+off packets as fast as it could, and this overran the transmit 
+descriptor rings in the driver. The error handling detected this 
+exhaustion of resources, returned kIOReturnOutputStall to the "upper" 
+layers of the stack, and waited for the watchdog timer to go off to 
+call transmitQueue->service( IOBasicOutputQueue::kServiceAsync ). The 
+service call notifies the stack that everything is peachy again and 
+transmission can restart.
+
+This meant there could be up to a full second of delay while the output 
+queue was stalled. The test returned a dismal score in the neighborhood 
+of 3 Mb. Not good...
+
+So I modified the code to return false from outputPacket if there 
+weren't any available resources to transmit another packet. This put 
+the onus for error recovery back on the stack (or application). 
+Rerunning the test resulted in a maximum usage of resources at all 
+times within the driver and then some. Honestly, it exposed some 
+problems with performance when servicing interrupts, so I'm glad I ran 
+it. It caused my call to IOMbufCursor::getPhysicalSegmentsWithCoalesce 
+to return zero a bunch of times
+
+--> also:
+http://rmrm.mirror.garr.it/mirrors/opendarwin-cvs/projects/darwin_tulip/src/base_tulip.cpp,v
+
+------------------
+
+http://www.vmware.com/community/thread.jspa?messageID=37291
+
+I dug through the -mm1 patch, and the problem seems to be the changes at 
+the end of the pcnet32_interrupt() function (in drivers/net/pcnet32.c). 
+The relevant patch fragment is: 
+
+- /* Clear any other interrupt, and set interrupt enable. */ 
+- lp->a.write_csr (ioaddr, 0, 0x7940); 
++ /* Set interrupt enable. */ 
++ lp->a.write_csr (ioaddr, 0, 0x0040); 
+
+Undoing this one section of the patch makes eth0 happy again. 
+
+I poked around with the values written to the csr register, and it 
+appears the virtual PCNet-II adapter needs bit 0x0100 (initialzation 
+done) set. So, writing 0x0140 instead of 0x0040 seems to work well. 
+
+I have no idea how accurate VMWare's emulation of this adapter is, or if 
+this may cause problems with other (physical) adapters. 
+
+----------------------
+
+http://groups.google.de/group/linux.kernel/browse_thread/thread/54ed965791c00916/1c47595494b50590?lnk=st&q=vmware+pcnet+16+bit&rnum=1&hl=de#1c47595494b50590
+
+I believe that it is not emulation bug. What happens is that you do not 
+confirm INIT DONE irq, causing endless stream of interrupts from card to 
+the CPU. This happens because CSR3 default value is 0 (enable all 
+interrupts), and driver does not modify it in any way (f.e. for 
+preventing INIT from causing interrupt). So when init is done, IDON 
+irq fires. In old driver it was acked by 0x7940 (or by 0x0140 in your 
+modified driver), but in new driver it is not acked in any way, 
+triggering this very same IRQ over and over. 
+
+pcnet32_interrupt should loop while csr0 contains some pending 
+interrupts (current mask 0x8600 should be changed to 0xDE00 to be 100% 
+sure that all interrupts we handle in loop are catched), and then 
+clear all other interrupts sources (0x2140) out of the loop. 
+
+
+Other possibility is masking these unused sources in CSR3... 
+
+
+But I believe that driver from -mm1 will hang even on real Am79C970A 
+hardware
+
+
+
+
+
+
+-------------------------------------------------
+
+Useful Code:
+
+
+http://www.jbox.dk/sanos/source/sys/dev/pcnet32.c.html
+
+------------------------
+
+
+http://64.233.183.104/search?q=cache:KxYloEmI5m8J:fxr.watson.org/fxr/source/pci/if_pcn.c+vmware+pcnet+16+bit&hl=de
+
+1236         /* Enable auto-padding of short TX frames. */
+1237         PCN_CSR_SETBIT(sc, PCN_CSR_TFEAT, PCN_TFEAT_PAD_TX);
+1238 
+
+
+374 static void
+375 pcn_reset(sc)
+376         struct pcn_softc        *sc;
+377 {
+378         /*
+379          * Issue a reset by reading from the RESET register.
+380          * Note that we don't know if the chip is operating in
+381          * 16-bit or 32-bit mode at this point, so we attempt
+382          * to reset the chip both ways. If one fails, the other
+383          * will succeed.
+384          */
+385         CSR_READ_2(sc, PCN_IO16_RESET);
+386         CSR_READ_4(sc, PCN_IO32_RESET);
+387 
+388         /* Wait a little while for the chip to get its brains in order. */
+389         DELAY(1000);
+390 
+391         /* Select 32-bit (DWIO) mode */
+392         CSR_WRITE_4(sc, PCN_IO32_RDP, 0);
+393 
+394         /* Select software style 3. */
+395         pcn_bcr_write(sc, PCN_BCR_SSTYLE, PCN_SWSTYLE_PCNETPCI_BURST);
+396 
+397         return;
+398 }
+
+
+1402 static void
+1403 pcn_stop(sc)
+1404         struct pcn_softc        *sc;
+1405 {
+1406         register int            i;
+1407         struct ifnet            *ifp;
+1408 
+1409         PCN_LOCK_ASSERT(sc);
+1410         ifp = sc->pcn_ifp;
+1411         ifp->if_timer = 0;
+1412 
+1413         callout_stop(&sc->pcn_stat_callout);
+1414 
+1415         /* Turn off interrupts */
+1416         PCN_CSR_CLRBIT(sc, PCN_CSR_CSR, PCN_CSR_INTEN);
+1417         /* Stop adapter */
+1418         PCN_CSR_SETBIT(sc, PCN_CSR_CSR, PCN_CSR_STOP);
+1419         sc->pcn_link = 0;
+1420 
+
+
+
+1118 static void
+1119 pcn_setfilt(ifp)
+1120         struct ifnet            *ifp;
+1121 {
+1122         struct pcn_softc        *sc;
+1123 
+1124         sc = ifp->if_softc;
+1125 
+1126          /* If we want promiscuous mode, set the allframes bit. */
+1127         if (ifp->if_flags & IFF_PROMISC) {
+1128                 PCN_CSR_SETBIT(sc, PCN_CSR_MODE, PCN_MODE_PROMISC);
+1129         } else {
+1130                 PCN_CSR_CLRBIT(sc, PCN_CSR_MODE, PCN_MODE_PROMISC);
+1131         }
+1132 
+1133         /* Set the capture broadcast bit to capture broadcast frames. */
+1134         if (ifp->if_flags & IFF_BROADCAST) {
+1135                 PCN_CSR_CLRBIT(sc, PCN_CSR_MODE, PCN_MODE_RXNOBROAD);
+1136         } else {
+1137                 PCN_CSR_SETBIT(sc, PCN_CSR_MODE, PCN_MODE_RXNOBROAD);
+1138         }
+1139 
+1140         return;
+1141 }
+1142 
+
+1452  * Stop all chip I/O so that the kernel's probe routines don't
+1453  * get confused by errant DMAs when rebooting.
+1454  */
+1455 static void
+1456 pcn_shutdown(dev)
+1457         device_t                dev;
+1458 {
+1459         struct pcn_softc        *sc;
+1460 
+1461         sc = device_get_softc(dev);
+1462 
+1463         PCN_LOCK(sc);
+1464         pcn_reset(sc);
+1465         pcn_stop(sc);
+1466         PCN_UNLOCK(sc);
+1467 
+1468         return;
+1469 }
+1470 
+

@@ -1,0 +1,446 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5B1B29B208DBAFB5004DB6F7 /* PCNet_HW.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B1B29AA08DBAFB5004DB6F7 /* PCNet_HW.h */; };
+		5B1B29B308DBAFB5004DB6F7 /* PCNet_lnc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B29AB08DBAFB5004DB6F7 /* PCNet_lnc.cpp */; };
+		5B1B29B408DBAFB5004DB6F7 /* PCNet_lnc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B1B29AC08DBAFB5004DB6F7 /* PCNet_lnc.h */; };
+		5B1B29B508DBAFB5004DB6F7 /* PCNet_PHY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B29AD08DBAFB5004DB6F7 /* PCNet_PHY.cpp */; };
+		5B1B29B608DBAFB5004DB6F7 /* PCNet_Private.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B29AE08DBAFB5004DB6F7 /* PCNet_Private.cpp */; };
+		5B1B29B708DBAFB5004DB6F7 /* PCNet_Var.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B1B29AF08DBAFB5004DB6F7 /* PCNet_Var.h */; };
+		5B1B29B808DBAFB5004DB6F7 /* PCNet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B1B29B008DBAFB5004DB6F7 /* PCNet.cpp */; };
+		5B1B29B908DBAFB5004DB6F7 /* PCNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B1B29B108DBAFB5004DB6F7 /* PCNet.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		06AA1265FFB2107B11CA28AA /* Development */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OPTIMIZATION_CFLAGS = "-O0";
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		06AA1266FFB2107B11CA28AA /* Deployment */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXBundleTarget section */
+		089C1673FE841209C02AAC07 /* MaxxussAMDPCNET */ = {
+			isa = PBXBundleTarget;
+			buildConfigurationList = 5B97A35208BC09C900E76D54 /* Build configuration list for PBXBundleTarget "MaxxussAMDPCNET" */;
+			buildPhases = (
+				06AA1267FFB2110C11CA28AA /* ShellScript */,
+				089C1674FE841209C02AAC07 /* Headers */,
+				089C1675FE841209C02AAC07 /* Resources */,
+				089C1676FE841209C02AAC07 /* Sources */,
+				089C1677FE841209C02AAC07 /* Frameworks */,
+				089C1679FE841209C02AAC07 /* Rez */,
+				06AA1264FFB2107B11CA28AA /* ShellScript */,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions/IONetworkingFamily.kext/Contents/PlugIns";
+				KERNEL_MODULE = YES;
+				LIBRARY_SEARCH_PATHS = "";
+				MODULE_IOKIT = YES;
+				MODULE_NAME = maxxuss.driver.AMDPCNET;
+				MODULE_VERSION = 0.1.0;
+				OTHER_CFLAGS = (
+					"-D",
+					__MBUF_TRANSITION_,
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = MaxxussAMDPCNET;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = kext;
+			};
+			dependencies = (
+			);
+			name = MaxxussAMDPCNET;
+			productInstallPath = "$(SYSTEM_LIBRARY_DIR)/Extensions/IONetworkingFamily.kext/Contents/PlugIns";
+			productName = MaxxussAMDPCNET;
+			productReference = 0B81C263FFB7832611CA28AA /* MaxxussAMDPCNET.kext */;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>MaxxussAMDPCNET</string>
+	<key>CFBundleGetInfoString</key>
+	<string>0.1.0, Maxxuss 2005</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>maxxuss.driver.AMDPCNET</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>AMD PCNET Fast Ethernet Driver</string>
+	<key>CFBundlePackageType</key>
+	<string>KEXT</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.1.0</string>
+	<key>IOKitPersonalities</key>
+	<dict>
+		<key>Maxxuss AMDPCNET PCI Adapter</key>
+		<dict>
+			<key>CFBundleIdentifier</key>
+			<string>maxxuss.driver.AMDPCNET</string>
+			<key>IOClass</key>
+			<string>maxxuss_driver_AMDPCNET</string>
+			<key>IOPCIMatch</key>
+			<string>0x20001022</string>
+			<key>IOProviderClass</key>
+			<string>IOPCIDevice</string>
+		</dict>
+	</dict>
+	<key>OSBundleLibraries</key>
+	<dict>
+		<key>com.apple.iokit.IONetworkingFamily</key>
+		<string>1.4.3</string>
+		<key>com.apple.iokit.IOPCIFamily</key>
+		<string>1.6</string>
+		<key>com.apple.kpi.bsd</key>
+		<string>8.0.0b2</string>
+		<key>com.apple.kpi.iokit</key>
+		<string>8.0.0b2</string>
+		<key>com.apple.kpi.libkern</key>
+		<string>8.0.0b2</string>
+		<key>com.apple.kpi.mach</key>
+		<string>8.0.0b2</string>
+	</dict>
+	<key>OSBundleRequired</key>
+	<string>Network-Root</string>
+</dict>
+</plist>
+";
+		};
+/* End PBXBundleTarget section */
+
+/* Begin PBXFileReference section */
+		0B81C263FFB7832611CA28AA /* MaxxussAMDPCNET.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = MaxxussAMDPCNET.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B1B29AA08DBAFB5004DB6F7 /* PCNet_HW.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PCNet_HW.h; sourceTree = "<group>"; };
+		5B1B29AB08DBAFB5004DB6F7 /* PCNet_lnc.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PCNet_lnc.cpp; sourceTree = "<group>"; };
+		5B1B29AC08DBAFB5004DB6F7 /* PCNet_lnc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PCNet_lnc.h; sourceTree = "<group>"; };
+		5B1B29AD08DBAFB5004DB6F7 /* PCNet_PHY.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PCNet_PHY.cpp; sourceTree = "<group>"; };
+		5B1B29AE08DBAFB5004DB6F7 /* PCNet_Private.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PCNet_Private.cpp; sourceTree = "<group>"; };
+		5B1B29AF08DBAFB5004DB6F7 /* PCNet_Var.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PCNet_Var.h; sourceTree = "<group>"; };
+		5B1B29B008DBAFB5004DB6F7 /* PCNet.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = PCNet.cpp; sourceTree = "<group>"; };
+		5B1B29B108DBAFB5004DB6F7 /* PCNet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = PCNet.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		089C1677FE841209C02AAC07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* MaxxussAMDPCNET */ = {
+			isa = PBXGroup;
+			children = (
+				247142CAFF3F8F9811CA285C /* Source */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = MaxxussAMDPCNET;
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B81C263FFB7832611CA28AA /* MaxxussAMDPCNET.kext */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		247142CAFF3F8F9811CA285C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				5B1B29AA08DBAFB5004DB6F7 /* PCNet_HW.h */,
+				5B1B29AB08DBAFB5004DB6F7 /* PCNet_lnc.cpp */,
+				5B1B29AC08DBAFB5004DB6F7 /* PCNet_lnc.h */,
+				5B1B29AD08DBAFB5004DB6F7 /* PCNet_PHY.cpp */,
+				5B1B29AE08DBAFB5004DB6F7 /* PCNet_Private.cpp */,
+				5B1B29AF08DBAFB5004DB6F7 /* PCNet_Var.h */,
+				5B1B29B008DBAFB5004DB6F7 /* PCNet.cpp */,
+				5B1B29B108DBAFB5004DB6F7 /* PCNet.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		089C1674FE841209C02AAC07 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B1B29B208DBAFB5004DB6F7 /* PCNet_HW.h in Headers */,
+				5B1B29B408DBAFB5004DB6F7 /* PCNet_lnc.h in Headers */,
+				5B1B29B708DBAFB5004DB6F7 /* PCNet_Var.h in Headers */,
+				5B1B29B908DBAFB5004DB6F7 /* PCNet.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 5B97A35608BC09C900E76D54 /* Build configuration list for PBXProject "MaxxussPCNET" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				06AA1265FFB2107B11CA28AA /* Development */,
+				06AA1266FFB2107B11CA28AA /* Deployment */,
+			);
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* MaxxussAMDPCNET */;
+			projectDirPath = "";
+			targets = (
+				089C1673FE841209C02AAC07 /* MaxxussAMDPCNET */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		089C1675FE841209C02AAC07 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		089C1679FE841209C02AAC07 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06AA1264FFB2107B11CA28AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "script=\"${SYSTEM_DEVELOPER_DIR}/ProjectBuilder Extras/Kernel Extension Support/KEXTPostprocess\";\nif [ -x \"$script\" ]; then\n    . \"$script\"\nfi";
+		};
+		06AA1267FFB2110C11CA28AA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "script=\"${SYSTEM_DEVELOPER_DIR}/ProjectBuilder Extras/Kernel Extension Support/KEXTPreprocess\";\nif [ -x \"$script\" ]; then\n    . \"$script\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		089C1676FE841209C02AAC07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B1B29B308DBAFB5004DB6F7 /* PCNet_lnc.cpp in Sources */,
+				5B1B29B508DBAFB5004DB6F7 /* PCNet_PHY.cpp in Sources */,
+				5B1B29B608DBAFB5004DB6F7 /* PCNet_Private.cpp in Sources */,
+				5B1B29B808DBAFB5004DB6F7 /* PCNet.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5B97A35308BC09C900E76D54 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions/IONetworkingFamily.kext/Contents/PlugIns";
+				KERNEL_MODULE = YES;
+				LIBRARY_SEARCH_PATHS = "";
+				MODULE_IOKIT = YES;
+				MODULE_NAME = maxxuss.driver.AMDPCNET;
+				MODULE_VERSION = 0.1.0;
+				OPTIMIZATION_CFLAGS = "-O0";
+				OTHER_CFLAGS = (
+					"-D",
+					__MBUF_TRANSITION_,
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = MaxxussAMDPCNET;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = kext;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		5B97A35408BC09C900E76D54 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions/IONetworkingFamily.kext/Contents/PlugIns";
+				KERNEL_MODULE = YES;
+				LIBRARY_SEARCH_PATHS = "";
+				MODULE_IOKIT = YES;
+				MODULE_NAME = maxxuss.driver.AMDPCNET;
+				MODULE_VERSION = 0.1.0;
+				OTHER_CFLAGS = (
+					"-D",
+					__MBUF_TRANSITION_,
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = MaxxussAMDPCNET;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = kext;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		5B97A35508BC09C900E76D54 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "";
+				INSTALL_PATH = "$(SYSTEM_LIBRARY_DIR)/Extensions/IONetworkingFamily.kext/Contents/PlugIns";
+				KERNEL_MODULE = YES;
+				LIBRARY_SEARCH_PATHS = "";
+				MODULE_IOKIT = YES;
+				MODULE_NAME = maxxuss.driver.AMDPCNET;
+				MODULE_VERSION = 0.1.0;
+				OTHER_CFLAGS = (
+					"-D",
+					__MBUF_TRANSITION_,
+				);
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = MaxxussAMDPCNET;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Default;
+		};
+		5B97A35708BC09C900E76D54 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		5B97A35808BC09C900E76D54 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_DEBUGGING_SYMBOLS = default;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+			};
+			name = Deployment;
+		};
+		5B97A35908BC09C900E76D54 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5B97A35208BC09C900E76D54 /* Build configuration list for PBXBundleTarget "MaxxussAMDPCNET" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B97A35308BC09C900E76D54 /* Development */,
+				5B97A35408BC09C900E76D54 /* Deployment */,
+				5B97A35508BC09C900E76D54 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		5B97A35608BC09C900E76D54 /* Build configuration list for PBXProject "MaxxussPCNET" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B97A35708BC09C900E76D54 /* Development */,
+				5B97A35808BC09C900E76D54 /* Deployment */,
+				5B97A35908BC09C900E76D54 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

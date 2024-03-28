@@ -1,0 +1,105 @@
+Copyright and Terms of Use/Distribution
+"""""""""""""""""""""""""""""""""""""""
+
+The source code for "AMD-PCNET-II Network Driver for Darwin/x86 and Mac 
+OS X/x86" and notes are written and released by Maxxuss.
+
+http://maxxuss.hotbox.ru/pcnet.html
+
+You can use this source code for any purpose as long as you provide this 
+copyright note file with your source or binary distribution. Please also 
+keep a reference to it in the header section of each provided source 
+code file.
+
+Some of the sources are derived from other open source products. The 
+following presents their copyright notes along with a reference to the 
+relevant source files.
+
+---------------------------------------
+The files
+
+- PCNet.cpp
+- PCNet.h
+- PCNet_PHY.cpp
+- PCNet_Private.cpp
+
+are based in some parts on the AppleRTL8139Ethernet distribution:
+
+http://www.opensource.apple.com/darwinsource/Current/AppleRTL8139Ethernet-3/
+http://www.opensource.apple.com/darwinsource/tarballs/apsl/AppleRTL8139Ethernet-3.tar.gz
+
+/*
+ * Copyright (c) 1998-2003 Apple Computer, Inc. All rights reserved.
+ *
+ * @APPLE_LICENSE_HEADER_START@
+ * 
+ * The contents of this file constitute Original Code as defined in and
+ * are subject to the Apple Public Source License Version 1.1 (the
+ * "License").  You may not use this file except in compliance with the
+ * License.  Please obtain a copy of the License at
+ * http://www.apple.com/publicsource and read it before using this file.
+ * 
+ * This Original Code and all software distributed under the License are
+ * distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, EITHER
+ * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
+ * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT.  Please see the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ * 
+ * @APPLE_LICENSE_HEADER_END@
+ */
+/*
+ * Copyright (c) 2001 Realtek Semiconductor Corp.  All rights reserved. 
+ *
+ * rtl8139.cpp
+ *
+ * HISTORY
+ *
+ * 09-Jul-01	Owen Wei at Realtek Semiconductor Corp. created for Realtek 
+ *		RTL8139 family NICs.
+ *
+ */
+
+
+---------------------------------------
+The files
+
+- PCNet_lnc.cpp
+- PCNet_lnc.h
+
+are based in some parts on the FreeBSD if_lnc driver:
+
+http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/dev/lnc/
+http://fxr.watson.org/fxr/source/dev/lnc/
+
+/*-
+ * Copyright (c) 1994-2000
+ *	Paul Richards. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer,
+ *    verbatim and that no modifications are made prior to this
+ *    point in the file.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. The name Paul Richards may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY PAUL RICHARDS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL PAUL RICHARDS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+ 

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="description" content="Maxxuss PCNET VMWare Network Driver for Darwin and Mac OS X 10.4.1 Tiger on the Intel/x86 Platform (Codename Marklar)">
+<meta name="keywords" content="Maxxuss,PCNET,VMWare Network Driver,Darwin,Mac OS X 10.4.1,Tiger,Intel x86 Platform,Marklar">
+<title>Maxxuss VMWare Network Driver (Darwin/Mac OS X)</title>
+<link href="styles.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.mainlook {
+	background-color: #DBE0E6;
+	font-family: "Courier New", Courier, monospace;
+	width: 690px;
+	font-size: 14px;
+	color: #000000;
+	margin-top: 2px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 10px;
+	border: 1px solid #999999;
+	padding-top: 5px;
+	padding-right: 15px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+}
+.vmwarelook {
+	background-color: #FFFFCC !important;
+}
+h1 {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 2em;
+}
+h2 {
+	font-size: 16px;
+	font-weight: bold;
+	font-variant: small-caps;
+	margin-top: 2em;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+}
+h3 {
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: underline;
+	margin-top: 1.5em;
+}
+
+b {
+	font-weight: bold;
+}
+ul {
+    margin-left: 0px;
+	padding-left: 18px;
+}
+ol {
+    margin-left: 0px;
+	padding-left: 26px;
+}
+li {
+    padding-bottom: 0.2em;
+}
+.sparse {
+    padding-bottom: 1em;
+}
+.sparseabove {
+    padding-top: 1em;
+}
+a:link {
+	color: #0000FF;
+	text-decoration: none;
+	font-family: "Courier New", Courier, monospace;
+}
+a:visited {
+	color: #3300FF;
+	text-decoration: none;
+	font-family: "Courier New", Courier, monospace;
+}
+a:hover {
+	border-bottom-width: 1px;
+	border-bottom-style: dashed;
+}
+.important {
+	color: #990000;
+}
+.datatable thead td {
+	font-weight: bold;
+}
+.datatable tr td {
+	padding: 0px 1em 0px 0px;
+}
+tr.sparse td {
+	padding: 0px 0px 0.5em 0px;
+}
+.odd {
+/*
+	color: #666666;
+*/
+}
+.even {
+}
+.topinfo {
+	font-size: 12px;
+	text-align: right;
+}
+.navbar {
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 1em;
+}
+-->
+</style>
+</head>
+<body>
+<div class="mainlook vmwarelook">
+  <div class="navbar">[ <a href="#usage">Usage</a> | <a href="#new">Changelog</a> | <a href="#tips">Tips</a> | <a href="#faq">FAQ</a> ]</div>
+  <div class="topinfo">v1.0 - Release Date: 17-Sep-2005</div>
+  <h1>Maxxuss VMWare Network Driver (Darwin/Mac OS X) v1.0</h1>
+  <p>This is the first release (<b>v1.0</b>) of my <b>AMD-PCNET-II Network Driver</b> for Darwin/x86 and Mac OS X/x86.</p>
+  <p>You can use it with <b>VMWare</b> to have full networking.</p>
+  <h2 id="usage">Usage</h2>
+  <p>For a start, I've packaged some shell scripts to ease installation and testing. The following instructions show how to use the driver (with Mac OS X in VMWare).</p>
+  <h3>Preparation with VMware</h3>
+  <ol>
+    <li>Setup VMWare to use a network adapter (NAT, bridged or host-only).</li>
+    <li>Better make a snapshot of your Darwin or Mac OS X VMWare image, so that you can restore in case of problems.</li>
+    <li>Start the OS under VMWare. Make sure your network adapter is connected.</li>
+    <li>If you have a previously installed MaxxussAMDPCNET driver (older version), please uninstall it (see below; Option 2).</li>
+    <li>Copy Folder &quot;MaxxussAMDPCNET&quot; to your harddrive (Needed for Option 1 below).</li>
+  </ol>
+  <h3>Usage Option 1: Non-permanent Operation</h3>
+  <p>You can load the driver on-the-fly while you're logged in. The driver will then be available until reboot or until you unload it.</p>
+  <p>To <b>load</b> the driver:</p>
+  <ol>
+    <li>Open Terminal.app and go into your MaxxussAMDPCNET folder on the harddrive. <br>
+      <b>Note:</b> It <b>does not work directly from CD</b>, since the shell script modifies the owner/group IDs for some files!)</li>
+    <li>In the terminal, type &quot;<span class="important">sudo ./load.sh</span>&quot;</li>
+    <li>Optional: Open the System Preferences and the Network Panel to configure your ethernet adapter.</li>
+  </ol>
+  <p>To <b>unload</b> the driver:</p>
+  <ol>
+    <li>Open Terminal.app and go into your MaxxussAMDPCNET folder.</li>
+    <li>In the terminal, type &quot;<span class="important">sudo ./unload.sh</span>&quot;</li>
+  </ol>
+  <h3>Usage Option 2: Permanent Operation (Installation)</h3>
+  <p>You can install the driver as a permanent kernel extension, which is then registered at boot time automatically. You can also uninstall the driver at any time.</p>
+  <p>To <b>install</b> the driver:</p>
+  <ol>
+    <li>Open Terminal.app and go into your MaxxussAMDPCNET folder.</li>
+    <li>In the terminal, type &quot;<span class="important">sudo ./install.sh</span>&quot;</li>
+    <li>Restart the system.</li>
+    <li>Optional: Open the System Preferences and the Network Panel to configure your ethernet adapter.</li>
+  </ol>
+  <p>To <b>uninstall</b> the driver:</p>
+  <ol>
+    <li>Open Terminal.app and go into your MaxxussAMDPCNET folder.</li>
+    <li>In the terminal, type &quot;<span class="important">sudo ./uninstall.sh</span>&quot;</li>
+    <li>Restart the system.</li>
+  </ol>
+  <h2 id="new">ChangeLog</h2>
+  <p>Since v0.1-test*:</p>
+  <ul>
+    <li>Faster:<br>
+      With <a href="http://dast.nlanr.net/Projects/Iperf/">IPerf</a>, I reach 250-350 Mbit/s between VMWare guest (Mac OS X) and host (Windows XP) on a AMD64-3200 system (before: 230-280 MBit/s).</li>
+    <li>Link Status Change Detection: You can now properly disconnect and connect again.</li>
+    <li>Support for: Broadcast (tested), Multicast (tested), Promiscuous Mode (untested).</li>
+    <li>Support for Power Management.</li>
+    <li>Proper updating of system-wide network statistics.</li>
+  </ul>
+  <h2 id="tips">Tips</h2>
+  <h3>Windows Connectivity (Samba) the Easy Way (GUI)</h3>
+  With Mac OS X 10.4, you can use the Finder to connect to a Windows system:
+  <ol>
+    <li>Finder Menu &quot;Go&quot; - &quot;Connect to Server&quot;,</li>
+    <li>Enter &quot;smb://xxxxx&quot;, where xxxxx is the name of your host. You can also use things like &quot;smb://xyz/unlisted-folder$&quot;. </li>
+  </ol>
+  <h2 id="faq">FAQ</h2>
+  <h3>&quot;Why do I loose connections due to Inactivity?&quot; (Sleep Mode)</h3>
+  <p>&quot;When I connect from the outside to my Mac OS X system, e.g. by SSH or FTP, and don't use the Mac GUI nor type anything in the SSH window, I will loose the connection to the Mac OS X system after some time (~ 10 minutes).&quot;</p>
+  <p>This effect might be quite annoying for you, when using Mac OS X in &quot;Server Mode&quot;. The reason is the Mac OS X Power Management, which puts devices to sleep if they are not used -- which, usually, is a good thing since it will lower power consumption.</p>
+  <p><b>Solution:</b></p>
+  <p>For &quot;Server Mode&quot; as described above, I suggest that you change the settings for Power Management. Do this:</p>
+  <ol>
+    <li>Start &quot;System Preferences&quot;.</li>
+    <li>Open the &quot;Energy Saver&quot; Panel.</li>
+    <li>Move the slider for &quot;Put the computer to sleep when it is inactive for:&quot; to a more convenient value than the default (10 min), e.g. to 1 hr, or &quot;Never&quot;.</li>
+  </ol>
+  <p>Alternatively, you can do it from your terminal (which is convenient if you have no access to your GUI). Use the <a href="http://developer.apple.com/documentation/Darwin/Reference/ManPages/man1/pmset.1.html">pmset</a> command. For example:</p>
+  <p>sudo pmset -c sleep 0</p>
+  <p>0 means &quot;Never&quot;, 60 would be 1 hr and so on.</p>
+  <h3>&quot;What Network cards (NIC) does the Driver support?&quot;</h3>
+  <p>The driver is coded against the model &quot;AMD Am79c970A PCNet-PCI II Single-Chip Full-Duplex Ethernet Controller for 
+    PCI Local Bus&quot;. It operates in PCNet-PCI II 32-Bit Adressing Mode and supports 16- and 32-Bit Register Access. It has been tested on all relevant VMWare products.</p>
+  <p>The NIC is identified by the operating system through its vendor ID (0x1022) and device ID (0x2000). If you want to try a compatible NIC with different IDs, you can add these under the key &quot;IOPCIMatch&quot; in the text file &quot;MaxxussAMDPCNET.kext/Contents/Info.plist&quot;. After installation, the kext folder is located in &quot;/System/Library/Extensions/IONetworkingFamily.kext/Contents/PlugIns&quot;.</p>
+  <h3>&quot;Is the Source Code available?&quot;</h3>
+  <p>Not yet. I need some time to clean it up and comment it. I will provide a seperate download with all sources and additional information. You can use it then for improvements, and most importantly, as a blueprint for other network card drivers.</p>
+</div>
+</body>
+</html>
